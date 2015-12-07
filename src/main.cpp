@@ -2,6 +2,8 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 
+#include "ball.h"
+
 constexpr int windowWidth(800);
 constexpr int windowHeight(600);
 
@@ -10,6 +12,8 @@ int main(int argc, char *argv[])
     sf::RenderWindow window{{windowWidth, windowHeight}, "Arkanoid"};
     window.setFramerateLimit(60);
 
+    Ball ball(20);
+
     while(window.isOpen()) {
         sf::Event e;
         while(window.pollEvent(e)) {
@@ -17,6 +21,7 @@ int main(int argc, char *argv[])
             if (e.type == sf::Event::Closed) window.close();
         }
         window.clear(sf::Color::Black);
+        ball.draw(window);
         window.display();
     }
 
