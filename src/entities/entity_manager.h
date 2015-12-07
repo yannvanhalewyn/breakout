@@ -6,14 +6,18 @@
 class EntityManager
 {
 public:
-    EntityManager() {}
     virtual ~EntityManager();
     void addEntity(IEntity* entity);
     void deleteEntity(IEntity* entity);
     void updateAll();
     void drawAll(sf::RenderWindow& window);
 
+    static EntityManager* getInstance();
+
 private:
+    EntityManager() {}
+    static EntityManager* instance;
+
     std::vector<IEntity*> m_entities;
     sf::Clock m_clock;
 };

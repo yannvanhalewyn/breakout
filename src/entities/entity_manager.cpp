@@ -1,6 +1,13 @@
 #include "entity_manager.h"
 #include <iostream>
 
+EntityManager* EntityManager::getInstance() {
+    if (!instance) {
+        instance = new EntityManager;
+    }
+    return instance;
+}
+
 EntityManager::~EntityManager() {
     for (IEntity* e : m_entities) {
         delete e;
@@ -27,3 +34,4 @@ void EntityManager::drawAll(sf::RenderWindow& window) {
     }
 }
 
+EntityManager* EntityManager::instance;
