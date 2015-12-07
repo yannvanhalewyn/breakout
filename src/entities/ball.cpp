@@ -7,6 +7,8 @@
 #include <math.h>
 #include "game.h"
 
+#include "brick.h"
+
 #define PI 3.14159265
 
 Ball::Ball(int radius) {
@@ -48,6 +50,22 @@ void Ball::update(float elapsed_time) {
     sf::FloatRect paddleBounds = EntityManager::getPaddle()->getGlobalBounds();
     if (paddleBounds.intersects(getGlobalBounds())) {
         if (m_velocity.y > 0) m_velocity.y = -m_velocity.y;
+    }
+
+    // Check for collision with a brick
+    std::vector<IEntity*> bricks = EntityManager::getBricks();
+    for (IEntity* brick : bricks) {
+        Brick* b = static_cast<Brick*>(brick);
+        if (b->isAlive() && b->getGlobalBounds().intersects(m_sprite.getGlobalBounds())) {
+            b->kill();
+            sf::FloatRect brick_bounds = b->getGlobalBounds();
+            sf::FloatRect ball_bounds = getGlobalBounds();
+            float diffx = brick_bounds.left - ball_bounds.left;
+            float diffy = brick_bounds.top - ball_bounds.top;
+            std::cout << vec2ToString({diffx, diffy}) << std::endl;
+            if (diffy > diffx) m_velocity.y = -m_velocity.y;
+            else m_velocity.x = -m_velocity.x;
+        }
     }
 }
 

@@ -37,3 +37,4 @@ void EntityManager::drawAll(sf::RenderWindow& window) {
 EntityManager* EntityManager::instance;
 IEntity* EntityManager::m_paddle;
 IEntity* EntityManager::m_ball;
+std::vector<IEntity*> EntityManager::m_bricks;

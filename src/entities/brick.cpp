@@ -10,7 +10,7 @@ Brick::Brick(int x, int y) {
 }
 
 void Brick::draw(sf::RenderWindow &window) {
-    window.draw(m_sprite);
+    if (m_alive) window.draw(m_sprite);
 }
 
 void Brick::update(float time_delta) {

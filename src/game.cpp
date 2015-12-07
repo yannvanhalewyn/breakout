@@ -27,6 +27,7 @@ void Game::init() {
     for (int i = 0; i < NUM_BRICKS; ++i) {
         Brick* brick = new Brick(50 + 120 * i, 50);
         m_entity_manager->addEntity(brick);
+        m_entity_manager->recordBrick(brick);
     }
 
     m_entity_manager->recordPaddle(paddle);

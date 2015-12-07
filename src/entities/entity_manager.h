@@ -16,8 +16,10 @@ public:
 
     void recordPaddle(IEntity* paddle) { m_paddle = paddle; }
     void recordBall(IEntity* ball) { m_ball = ball; }
+    void recordBrick(IEntity* brick) { m_bricks.push_back(brick); }
     static IEntity* getBall() { return m_ball; }
     static IEntity* getPaddle() { return m_paddle; }
+    static std::vector<IEntity*> getBricks() { return m_bricks; }
 
 private:
     EntityManager() {}
@@ -28,5 +30,6 @@ private:
 
     static IEntity* m_paddle;
     static IEntity* m_ball;
+    static std::vector<IEntity*> m_bricks;
 };
 #endif
