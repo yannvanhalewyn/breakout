@@ -16,16 +16,13 @@ void Game::init() {
 
     // Setup entities
     m_entity_manager = EntityManager::getInstance();
-    Ball* b1 = new Ball(20);
-    Ball* b2 = new Ball(50);
-    Ball* b3 = new Ball(10);
-    m_entity_manager->addEntity(b1);
-    m_entity_manager->addEntity(b2);
-    m_entity_manager->addEntity(b3);
+    Ball* ball = new Ball(20);
+    m_entity_manager->addEntity(ball);
+    Paddle* paddle = new Paddle();
+    m_entity_manager->addEntity(paddle);
 
-    // Add paddle
-    Paddle* p = new Paddle();
-    m_entity_manager->addEntity(p);
+    m_entity_manager->recordPaddle(paddle);
+    m_entity_manager->recordBall(ball);
 }
 
 void Game::run() {

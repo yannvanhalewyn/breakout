@@ -12,7 +12,7 @@ public:
     virtual ~Paddle () {};
     void draw(sf::RenderWindow &window) override;
     void update(float elapsed_time) override;
-
+    sf::FloatRect getGlobalBounds() override;
 private:
     sf::Sprite m_sprite;
 };

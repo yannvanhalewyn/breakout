@@ -25,3 +25,7 @@ void Paddle::update(float elapsed_time) {
         m_sprite.move(offset, 0);
     }
 }
+
+sf::FloatRect Paddle::getGlobalBounds() {
+    return m_sprite.getGlobalBounds();
+}

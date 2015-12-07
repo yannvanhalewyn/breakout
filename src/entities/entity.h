@@ -9,5 +9,6 @@ public:
     virtual ~IEntity () {}
     virtual void draw(sf::RenderWindow &window) = 0;
     virtual void update(float time_delta) = 0;
+    virtual sf::FloatRect getGlobalBounds() = 0;
 };
 #endif

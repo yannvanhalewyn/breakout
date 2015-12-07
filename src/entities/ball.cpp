@@ -43,6 +43,16 @@ void Ball::update(float elapsed_time) {
         m_velocity.y = - m_velocity.y;
         move(elapsed_time);
     }
+
+    // Check for collision with paddle
+    sf::FloatRect paddleBounds = EntityManager::getPaddle()->getGlobalBounds();
+    if (paddleBounds.intersects(getGlobalBounds())) {
+        if (m_velocity.y > 0) m_velocity.y = -m_velocity.y;
+    }
+}
+
+sf::FloatRect Ball::getGlobalBounds() {
+    return m_sprite.getGlobalBounds();
 }
 
 void Ball::move(float elapsed_time) {
