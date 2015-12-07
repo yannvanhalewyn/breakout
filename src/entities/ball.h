@@ -17,6 +17,8 @@ public:
 private:
     sf::Sprite m_sprite;
     glm::vec2 m_velocity; // in pixel/s
+
+    void move(float elapsed_time);
 };
 
 #endif

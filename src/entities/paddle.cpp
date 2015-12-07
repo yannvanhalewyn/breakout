@@ -1,13 +1,15 @@
 #include "paddle.h"
 #include "texture_manager.h"
 #include "path.h"
+#include "game.h"
 
 Paddle::Paddle() {
     sf::Texture* t = TextureManager::get(Path::resourcePath("paddle.png"));
     m_sprite.setTexture(*t);
     auto bounds = m_sprite.getLocalBounds();
     m_sprite.setOrigin(bounds.width/2, bounds.height/2);
-    m_sprite.setPosition(600, 700);
+    sf::Vector2u windowSize = Game::window->getSize();
+    m_sprite.setPosition(windowSize.x / 2, windowSize.y - 50);
 }
 
 void Paddle::draw(sf::RenderWindow &window) {
