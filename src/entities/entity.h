@@ -8,6 +8,6 @@ class IEntity
 public:
     virtual ~IEntity () {}
     virtual void draw(sf::RenderWindow &window) = 0;
-    // virtual void update(size_t delta_time);
+    virtual void update(float time_delta) = 0;
 };
 #endif

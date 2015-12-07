@@ -7,7 +7,7 @@
 class Ball : public IEntity
 {
 public:
-    Ball (int radius);
+    Ball (int radius, glm::vec2 velocity = {20, -20});
     virtual ~Ball () {}
     void draw(sf::RenderWindow &window);
     void update(float elapsed_time);

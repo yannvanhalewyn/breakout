@@ -4,7 +4,7 @@
 #include "texture_manager.h"
 #include "glm_helper.h"
 
-Ball::Ball(int radius) : m_velocity(70, -80) {
+Ball::Ball(int radius, glm::vec2 velocity) : m_velocity(velocity) {
     sf::Texture* t = TextureManager::get(Path::resourcePath("ball.png"));
     m_sprite.setTexture(*t);
     auto bounds = m_sprite.getLocalBounds();
