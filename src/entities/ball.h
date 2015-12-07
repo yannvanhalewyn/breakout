@@ -1,10 +1,10 @@
 #ifndef __BAL_H__
 #define __BAL_H__
 
-#include "game_object.h"
+#include "entity.h"
 #include <glm/glm.hpp>
 
-class Ball : public IGameObject
+class Ball : public IEntity
 {
 public:
     Ball (int radius);

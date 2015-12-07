@@ -3,10 +3,10 @@
 
 #include "SFML/Graphics.hpp"
 
-class IGameObject
+class IEntity
 {
 public:
-    virtual ~IGameObject () {}
+    virtual ~IEntity () {}
     virtual void draw(sf::RenderWindow &window) = 0;
     // virtual void update(size_t delta_time);
 };
