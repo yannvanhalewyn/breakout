@@ -41,17 +41,39 @@ void Ball::update(float elapsed_time) {
     sf::FloatRect window_bounds = sf::FloatRect(0, 0, window_size.x, window_size.y);
     if (!isWithinWidth(bounds, window_bounds)) {
         m_velocity.x = - m_velocity.x;
-        move(elapsed_time);
+        sf::Vector2f pos = m_circle.getPosition();
+        m_circle.setPosition(glm::clamp(pos.x, 0.0f, (float)window_size.x),
+                glm::clamp(pos.y, 0.0f, (float)window_size.y));
     }
     if (!isWithinHeight(bounds, window_bounds)) {
         m_velocity.y = - m_velocity.y;
-        move(elapsed_time);
+        sf::Vector2f pos = m_circle.getPosition();
+        m_circle.setPosition(glm::clamp(pos.x, 0.0f, (float)window_size.x),
+                glm::clamp(pos.y, 0.0f, (float)window_size.y));
     }
 
-    // Check for collision with paddle
     sf::FloatRect paddleBounds = EntityManager::getPaddle()->getGlobalBounds();
+    // If broad collision, check deeper
     if (paddleBounds.intersects(getGlobalBounds())) {
-        if (m_velocity.y > 0) m_velocity.y = -m_velocity.y;
+        // The ball a instance of simple Circle struct (shapes.h)
+        Circle c({m_circle.getPosition().x, m_circle.getPosition().y},
+                  m_circle.getRadius());
+        Rectangle r(paddleBounds.left, paddleBounds.top,
+                              paddleBounds.width, paddleBounds.height);
+        Collision col = getCollisionBetweenCircleAndRect(c, r);
+        if (col.collides) {
+            m_circle.move(col.push_back.x, col.push_back.y);
+            switch (getSideFromAngle(col.angle)) {
+                case NORTH:
+                case SOUTH:
+                    m_velocity.y = -m_velocity.y;
+                    break;
+                case EAST:
+                case WEST:
+                    m_velocity.x = -m_velocity.x;
+                    break;
+            }
+        }
     }
 
     // Check for collision with a brick
@@ -62,7 +84,7 @@ void Ball::update(float elapsed_time) {
         if (b->isAlive() && b->getGlobalBounds().intersects(m_circle.getGlobalBounds())) {
             // Deeper check
             Circle c({m_circle.getPosition().x, m_circle.getPosition().y},
-                      m_circle.getRadius());
+                    m_circle.getRadius());
             sf::FloatRect brick_bounds = b->getGlobalBounds();
             Rectangle r(brick_bounds.left, brick_bounds.top,
                         brick_bounds.width, brick_bounds.height);
