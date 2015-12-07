@@ -15,17 +15,14 @@ void Game::init() {
     }
 
     // Setup entities
-    m_entity_manager = EntityManager::getInstance();
     Ball* b1 = new Ball(20);
     Ball* b2 = new Ball(50);
     Ball* b3 = new Ball(10);
-    m_entity_manager->addEntity(b1);
-    m_entity_manager->addEntity(b2);
-    m_entity_manager->addEntity(b3);
-
-    // Add paddle
+    m_entity_manager.addEntity(b1);
+    m_entity_manager.addEntity(b2);
+    m_entity_manager.addEntity(b3);
     Paddle* p = new Paddle();
-    m_entity_manager->addEntity(p);
+    m_entity_manager.addEntity(p);
 }
 
 void Game::run() {
@@ -36,8 +33,8 @@ void Game::run() {
             if (e.type == sf::Event::Closed) window->close();
         }
         window->clear(sf::Color::Black);
-        m_entity_manager->updateAll();
-        m_entity_manager->drawAll(*window);
+        m_entity_manager.updateAll();
+        m_entity_manager.drawAll(*window);
         window->display();
     }
 }

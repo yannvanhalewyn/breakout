@@ -15,7 +15,7 @@ public:
     static sf::RenderWindow* window;
 
 private:
-    EntityManager* m_entity_manager;
+    EntityManager m_entity_manager;
 };
 
 #endif
