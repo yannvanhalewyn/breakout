@@ -4,7 +4,7 @@
 #include "entity.h"
 #include <glm/glm.hpp>
 
-#define BALL_SPEED 400 // px per second
+#define BALL_SPEED 500 // px per second
 
 class Ball : public IEntity
 {
@@ -16,7 +16,7 @@ public:
     sf::FloatRect getGlobalBounds() override;
 
 private:
-    sf::Sprite m_sprite;
+    sf::CircleShape m_circle;
     glm::vec2 m_velocity; // in pixel/s
 
     void move(float elapsed_time);

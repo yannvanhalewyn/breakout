@@ -11,14 +11,13 @@
 
 #define PI 3.14159265
 
-Ball::Ball(int radius) {
+Ball::Ball(int radius) : m_circle(radius) {
     // Setup the balls texture and position
-    sf::Texture* t = TextureManager::get(Path::resourcePath("ball.png"));
-    m_sprite.setTexture(*t);
-    auto bounds = m_sprite.getLocalBounds();
+    auto bounds = m_circle.getLocalBounds();
     sf::Vector2u windowSize = Game::window->getSize();
-    m_sprite.setOrigin(bounds.width/2, bounds.height/2);
-    m_sprite.setPosition(windowSize.x/2, windowSize.y - 100);
+    m_circle.setOrigin(bounds.width/2, bounds.height/2);
+    m_circle.setPosition(windowSize.x/2, windowSize.y - 100);
+    m_circle.setFillColor(sf::Color::Blue);
 
     // Launch the ball in a random direction
     int angularOffset = get_rand(10, 170);
@@ -27,13 +26,13 @@ Ball::Ball(int radius) {
 }
 
 void Ball::draw(sf::RenderWindow &window) {
-    window.draw(this->m_sprite);
+    window.draw(this->m_circle);
 }
 
 void Ball::update(float elapsed_time) {
     move(elapsed_time);
 
-    auto bounds = m_sprite.getGlobalBounds();
+    auto bounds = m_circle.getGlobalBounds();
 
     sf::Vector2u window_size = Game::window->getSize();
     sf::FloatRect window_bounds = sf::FloatRect(0, 0, window_size.x, window_size.y);
@@ -56,7 +55,7 @@ void Ball::update(float elapsed_time) {
     std::vector<IEntity*> bricks = EntityManager::getBricks();
     for (IEntity* brick : bricks) {
         Brick* b = static_cast<Brick*>(brick);
-        if (b->isAlive() && b->getGlobalBounds().intersects(m_sprite.getGlobalBounds())) {
+        if (b->isAlive() && b->getGlobalBounds().intersects(m_circle.getGlobalBounds())) {
             b->kill();
             sf::FloatRect brick_bounds = b->getGlobalBounds();
             sf::FloatRect ball_bounds = getGlobalBounds();
@@ -70,10 +69,10 @@ void Ball::update(float elapsed_time) {
 }
 
 sf::FloatRect Ball::getGlobalBounds() {
-    return m_sprite.getGlobalBounds();
+    return m_circle.getGlobalBounds();
 }
 
 void Ball::move(float elapsed_time) {
     glm::vec2 offset = m_velocity * (elapsed_time / 1000);
-    m_sprite.move(offset.x, offset.y);
+    m_circle.move(offset.x, offset.y);
 }

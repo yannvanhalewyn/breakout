@@ -3,6 +3,8 @@
 
 #include "entity.h"
 
+#define BRICK_SIZE {100, 40}
+
 class Brick : public IEntity
 {
 public:
@@ -16,7 +18,7 @@ public:
     bool isAlive() { return m_alive; }
 
 private:
-    sf::Sprite m_sprite;
+    sf::RectangleShape m_rect;
     bool m_alive = true;
     /* data */
 };

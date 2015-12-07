@@ -17,17 +17,23 @@ void Game::init() {
 
     // Setup entities
     m_entity_manager = EntityManager::getInstance();
-    Ball* ball = new Ball(20);
+    Ball* ball = new Ball(15);
     m_entity_manager->addEntity(ball);
     Paddle* paddle = new Paddle();
     m_entity_manager->addEntity(paddle);
 
     // Add bricks
-#define NUM_BRICKS 10
-    for (int i = 0; i < NUM_BRICKS; ++i) {
-        Brick* brick = new Brick(50 + 120 * i, 50);
-        m_entity_manager->addEntity(brick);
-        m_entity_manager->recordBrick(brick);
+#define NUM_BRICKS_X 10
+#define NUM_BRICKS_Y 3
+#define OFFSET_X 100
+#define OFFSET_Y 100
+
+    for (int x = 0; x < NUM_BRICKS_X; ++x) {
+        for (int y = 0; y < NUM_BRICKS_Y; ++y) {
+            Brick* brick = new Brick(OFFSET_X + 100 * x, OFFSET_Y + 40 * y);
+            m_entity_manager->addEntity(brick);
+            m_entity_manager->recordBrick(brick);
+        }
     }
 
     m_entity_manager->recordPaddle(paddle);
