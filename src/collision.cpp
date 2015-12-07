@@ -22,9 +22,10 @@ const Collision getCollisionBetweenCircleAndRect(const Circle& c, const Rectangl
     return collision;
 }
 
+#define between(V, X, Y) V > X && V <= Y
 Side getSideFromAngle(float angle) {
-    if (angle > -135 && angle <= -45) return WEST;
-    if (angle > -45 && angle <= 45) return SOUTH;
-    if (angle > 45 && angle <= 135) return EAST;
+    if (between(angle, -135, -45)) return WEST;
+    if (between(angle, -45, 45)) return SOUTH;
+    if (between(angle, 45, 135)) return EAST;
     return NORTH;
 }

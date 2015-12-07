@@ -3,7 +3,7 @@
 
 #include "entity.h"
 
-#define PADDLE_SPEED 400 // in px per seconds
+#define PADDLE_SPEED 550 // in px per seconds
 
 class Paddle : public IEntity
 {

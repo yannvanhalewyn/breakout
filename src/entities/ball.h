@@ -3,6 +3,7 @@
 
 #include "entity.h"
 #include <glm/glm.hpp>
+#include "collision.h"
 
 #define BALL_SPEED 500 // px per second
 
@@ -20,6 +21,9 @@ private:
     glm::vec2 m_velocity; // in pixel/s
 
     void move(float elapsed_time);
+    Collision getCollisionWithEntity(IEntity* e);
+    void handleCollision(const Collision& coll);
+    void collideWithWindowFrame();
 };
 
 #endif

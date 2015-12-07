@@ -10,7 +10,8 @@ typedef struct Collision {
     float angle;
 } Collision;
 
-const Collision getCollisionBetweenCircleAndRect(const Circle& c, const Rectangle& r);
+const Collision getCollisionBetweenCircleAndRect(const Circle& c,
+        const Rectangle& r);
 
 typedef enum Side {
     NORTH, EAST, SOUTH, WEST
