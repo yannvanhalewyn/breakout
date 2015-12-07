@@ -2,6 +2,7 @@
 
 #include "ball.h"
 #include "paddle.h"
+#include "brick.h"
 
 Game::~Game() {
     delete window;
@@ -20,6 +21,13 @@ void Game::init() {
     m_entity_manager->addEntity(ball);
     Paddle* paddle = new Paddle();
     m_entity_manager->addEntity(paddle);
+
+    // Add bricks
+#define NUM_BRICKS 10
+    for (int i = 0; i < NUM_BRICKS; ++i) {
+        Brick* brick = new Brick(50 + 120 * i, 50);
+        m_entity_manager->addEntity(brick);
+    }
 
     m_entity_manager->recordPaddle(paddle);
     m_entity_manager->recordBall(ball);
