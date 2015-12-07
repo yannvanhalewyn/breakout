@@ -1,10 +1,11 @@
 #include "ball.h"
 #include <iostream>
 #include "path.h"
+#include "texture_manager.h"
 
 Ball::Ball(int radius) {
-    m_ball_texture.loadFromFile(Path::resourcePath("ball.png"));
-    m_sprite.setTexture(m_ball_texture);
+    sf::Texture* t = TextureManager::get(Path::resourcePath("ball.png"));
+    m_sprite.setTexture(*t);
 }
 
 void Ball::draw(sf::RenderWindow &window) {

@@ -12,7 +12,6 @@ public:
 
 private:
     sf::Sprite m_sprite;
-    sf::Texture m_ball_texture;
 };
 
 #endif
