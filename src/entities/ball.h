@@ -4,13 +4,15 @@
 #include "entity.h"
 #include <glm/glm.hpp>
 
+#define BALL_SPEED 400 // px per second
+
 class Ball : public IEntity
 {
 public:
-    Ball (int radius, glm::vec2 velocity = {20, -20});
+    Ball (int radius);
     virtual ~Ball () {}
-    void draw(sf::RenderWindow &window);
-    void update(float elapsed_time);
+    void draw(sf::RenderWindow &window) override;
+    void update(float elapsed_time) override;
 
 private:
     sf::Sprite m_sprite;

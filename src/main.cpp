@@ -4,22 +4,25 @@
 
 #include "entity_manager.h"
 #include "ball.h"
+#include "paddle.h"
 
-constexpr int windowWidth(800);
-constexpr int windowHeight(600);
+constexpr int windowWidth(1200);
+constexpr int windowHeight(780);
 
 int main(int argc, char *argv[])
 {
     sf::RenderWindow window{{windowWidth, windowHeight}, "Arkanoid"};
     window.setFramerateLimit(60);
 
-    Ball* b1 = new Ball(20, {10, -50});
-    Ball* b2 = new Ball(50, {40, -60});
-    Ball* b3 = new Ball(10, {120, 130});
+    Ball* b1 = new Ball(20);
+    Ball* b2 = new Ball(50);
+    Ball* b3 = new Ball(10);
     EntityManager e_manager;
     e_manager.addEntity(b1);
     e_manager.addEntity(b2);
     e_manager.addEntity(b3);
+    Paddle* p = new Paddle();
+    e_manager.addEntity(p);
 
     while(window.isOpen()) {
         sf::Event e;
