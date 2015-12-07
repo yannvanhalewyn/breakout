@@ -2,7 +2,7 @@
 CC = clang++
 
 # Flags
-CFLAGS = -c -Wall -std=c++14 -I src/ -I src/entities
+CFLAGS = -c -Wall -std=c++14 -I src/ -I src/entities -I src/helpers
 LDLFLAGS = -lsfml-graphics -lsfml-window -lsfml-system -framework CoreFoundation
 
 # Directories

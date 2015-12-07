@@ -22,6 +22,7 @@ int main(int argc, char *argv[])
         }
         window.clear(sf::Color::Black);
         ball.draw(window);
+        ball.update(100);
         window.display();
     }
 
