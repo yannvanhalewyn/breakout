@@ -15,8 +15,9 @@ void EntityManager::deleteEntity(IEntity* entity) {
 }
 
 void EntityManager::updateAll() {
+    float dt = m_clock.restart().asMilliseconds();
     for (IEntity* e : m_entities) {
-        e->update(100);
+        e->update(dt);
     }
 }
 
