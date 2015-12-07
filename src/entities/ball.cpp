@@ -8,6 +8,8 @@
 #include "game.h"
 
 #include "brick.h"
+#include "shapes.h"
+#include "collision.h"
 
 #define PI 3.14159265
 
@@ -34,6 +36,7 @@ void Ball::update(float elapsed_time) {
 
     auto bounds = m_circle.getGlobalBounds();
 
+    // Bounce around borders of window
     sf::Vector2u window_size = Game::window->getSize();
     sf::FloatRect window_bounds = sf::FloatRect(0, 0, window_size.x, window_size.y);
     if (!isWithinWidth(bounds, window_bounds)) {
@@ -55,15 +58,31 @@ void Ball::update(float elapsed_time) {
     std::vector<IEntity*> bricks = EntityManager::getBricks();
     for (IEntity* brick : bricks) {
         Brick* b = static_cast<Brick*>(brick);
+        // Broad collision check
         if (b->isAlive() && b->getGlobalBounds().intersects(m_circle.getGlobalBounds())) {
-            b->kill();
+            // Deeper check
+            Circle c({m_circle.getPosition().x, m_circle.getPosition().y},
+                      m_circle.getRadius());
             sf::FloatRect brick_bounds = b->getGlobalBounds();
-            sf::FloatRect ball_bounds = getGlobalBounds();
-            float diffx = brick_bounds.left - ball_bounds.left;
-            float diffy = brick_bounds.top - ball_bounds.top;
-            std::cout << vec2ToString({diffx, diffy}) << std::endl;
-            if (diffy > diffx) m_velocity.y = -m_velocity.y;
-            else m_velocity.x = -m_velocity.x;
+            Rectangle r(brick_bounds.left, brick_bounds.top,
+                        brick_bounds.width, brick_bounds.height);
+            Collision coll = getCollisionBetweenCircleAndRect(c, r);
+            if (coll.collides) {
+                glm::vec2 v = c.center - r.getCenter();
+                b->kill();
+                m_circle.move(coll.push_back.x, coll.push_back.y);
+                std::cout << getSideFromAngle(coll.angle) << std::endl;
+                switch (getSideFromAngle(coll.angle)) {
+                    case NORTH:
+                    case SOUTH:
+                        m_velocity.y = -m_velocity.y;
+                        break;
+                    case EAST:
+                    case WEST:
+                        m_velocity.x = -m_velocity.x;
+                        break;
+                }
+            }
         }
     }
 }
