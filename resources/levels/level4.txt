@@ -1,0 +1,7 @@
+BALL_SPEED: 600
+PADDLE_SIZE: 250
+xxxxxxxxxxx
+xx.......xx
+xx...X...xx
+xx.......xx
+xxxxxxxxxxx
