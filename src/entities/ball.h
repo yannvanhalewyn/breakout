@@ -5,12 +5,10 @@
 #include <glm/glm.hpp>
 #include "collision.h"
 
-#define BALL_SPEED 500 // px per second
-
 class Ball : public IEntity
 {
 public:
-    Ball (int radius);
+    Ball (float speed = 500, int radius = 15);
     virtual ~Ball () {}
     void draw(sf::RenderWindow &window) override;
     void update(float elapsed_time) override;

@@ -16,6 +16,7 @@ public:
 
 private:
     EntityManager* m_entity_manager;
+    int m_current_level = 1;
 };
 
 #endif

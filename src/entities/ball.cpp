@@ -12,7 +12,7 @@
 
 #define PI 3.14159265
 
-Ball::Ball(int radius) : m_circle(radius) {
+Ball::Ball(float speed, int radius) : m_circle(radius) {
     // Setup the balls texture and position
     auto bounds = m_circle.getLocalBounds();
     sf::Vector2u windowSize = Game::window->getSize();
@@ -22,8 +22,8 @@ Ball::Ball(int radius) : m_circle(radius) {
 
     // Launch the ball in a random direction
     int angularOffset = get_rand(10, 170);
-    m_velocity.x = BALL_SPEED * cos(angularOffset * PI / 180);
-    m_velocity.y = BALL_SPEED * -sin(angularOffset * PI / 180);
+    m_velocity.x = speed * cos(angularOffset * PI / 180);
+    m_velocity.y = speed * -sin(angularOffset * PI / 180);
 }
 
 void Ball::draw(sf::RenderWindow &window) {
