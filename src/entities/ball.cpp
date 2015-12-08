@@ -51,7 +51,7 @@ void Ball::handleCollision(const Collision& coll) {
         // Move back out of the colliding body
         m_circle.move(coll.push_back.x, coll.push_back.y);
         // Bounce off the colliding body
-        switch (getSideFromAngle(coll.angle)) {
+        switch (coll.side) {
             case NORTH:
             case SOUTH:
                 m_velocity.y = -m_velocity.y;
@@ -99,7 +99,8 @@ void Ball::update(float elapsed_time) {
     for (IEntity* brick : bricks) {
         Brick* b = static_cast<Brick*>(brick);
         // Broad collision check
-        if (b->isAlive() && b->getGlobalBounds().intersects(m_circle.getGlobalBounds())) {
+        if (b->isAlive() && b->getGlobalBounds()
+                .intersects(m_circle.getGlobalBounds())) {
             // Deeper check
             Collision coll = getCollisionWithEntity(brick);
             handleCollision(coll);

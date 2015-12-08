@@ -2,6 +2,13 @@
 #include <iostream>
 #include <glm/gtx/euler_angles.hpp>
 
+inline Side getCirclesSideFromRect(const Circle& c, const Rectangle& r) {
+    if (c.center.y < r.top) return NORTH;
+    if (c.center.y > r.top + r.height) return SOUTH;
+    if (c.center.x < r.left) return WEST;
+    return EAST;
+}
+
 const Collision getCollisionBetweenCircleAndRect(const Circle& c, const Rectangle& r) {
 
     // The return object
@@ -17,15 +24,7 @@ const Collision getCollisionBetweenCircleAndRect(const Circle& c, const Rectangl
 
     glm::vec2 v = c.center - r.getCenter();
     collision.push_back = glm::normalize(v) * collision.depth;
-    collision.angle = glm::degrees(glm::atan(v.x, v.y));
 
+    collision.side = getCirclesSideFromRect(c, r);
     return collision;
-}
-
-#define between(V, X, Y) V > X && V <= Y
-Side getSideFromAngle(float angle) {
-    if (between(angle, -135, -45)) return WEST;
-    if (between(angle, -45, 45)) return SOUTH;
-    if (between(angle, 45, 135)) return EAST;
-    return NORTH;
 }
