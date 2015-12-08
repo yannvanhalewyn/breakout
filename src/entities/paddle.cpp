@@ -28,13 +28,9 @@ void Paddle::update(float elapsed_time) {
     }
 
     // Check for window bounds
-    sf::Vector2u w_size = Game::window->getSize();
-    Rectangle w_rect(0, 0, w_size.x, w_size.y);
-    sf::FloatRect p_bounds = getGlobalBounds();
-    Rectangle p_rect(p_bounds.left, p_bounds.top,
-            p_bounds.width, p_bounds.height);
-    Collision coll = getCollisionOfRectWithinBounds(p_rect, w_rect);
-    std::cout << coll.collides << std::endl;
+    Collision coll = getCollisionOfRectWithinBounds(
+            rectFromSFMLBounds(getGlobalBounds()),
+            rectFromSFMLSize(Game::window->getSize()));
     if (coll.collides) {
         m_sprite.move(coll.push_back.x, coll.push_back.y);
     }

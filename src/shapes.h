@@ -2,6 +2,9 @@
 #define __SHAPES_H__
 
 #include <glm/glm.hpp>
+// For float rects and circle shapes factories
+#include <SFML/Graphics.hpp>
+#include <SFML/Graphics.hpp>
 
 typedef struct Circle {
     glm::vec2 center = {0, 0};
@@ -21,5 +24,9 @@ typedef struct Rectangle {
         return glm::vec2(left + width/2, top + height/2);
     }
 } Rectangle;
+
+Rectangle rectFromSFMLBounds(const sf::FloatRect& rect);
+Rectangle rectFromSFMLSize(const sf::Vector2u& size);
+Circle circleFromSFMLCircle(const sf::CircleShape& c);
 
 #endif

@@ -37,6 +37,7 @@ const Collision getCollisionOfRectWithinBounds(const Rectangle& rect,
     if (rect.left < frame.left) {
         // Will not collide
         coll.collides = true;
+        coll.side = WEST;
         coll.depth = frame.left - rect.left;
         coll.push_back = glm::vec2(coll.depth, 0.0f);
         return coll;
@@ -45,6 +46,7 @@ const Collision getCollisionOfRectWithinBounds(const Rectangle& rect,
     // Out of right side
     if (rect.left + rect.width > frame.left + frame.width) {
         coll.collides = true;
+        coll.side = EAST;
         coll.depth = rect.left + rect.width - (frame.left + frame.width);
         coll.push_back = glm::vec2(-coll.depth, 0.0f);
         return coll;
@@ -53,6 +55,7 @@ const Collision getCollisionOfRectWithinBounds(const Rectangle& rect,
     // Out of top
     if (rect.top < frame.top) {
         coll.collides = true;
+        coll.side = NORTH;
         coll.depth = frame.top - rect.top;
         coll.push_back = glm::vec2(0.0f, coll.depth);
         return coll;
@@ -61,6 +64,7 @@ const Collision getCollisionOfRectWithinBounds(const Rectangle& rect,
     // Out of bottom
     if (rect.top + rect.height > frame.top + frame.height) {
         coll.collides = true;
+        coll.side = SOUTH;
         coll.depth = rect.top + rect.height - (frame.top + frame.height);
         coll.push_back = glm::vec2(0.0f, -coll.depth);
         return coll;

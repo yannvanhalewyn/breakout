@@ -30,18 +30,9 @@ void Ball::draw(sf::RenderWindow &window) {
     window.draw(this->m_circle);
 }
 
-inline const Rectangle rectFromEntity(IEntity* e) {
-    sf::FloatRect bounds = e->getGlobalBounds();
-    return Rectangle(bounds.left, bounds.top, bounds.width, bounds.height);
-}
-
-inline const Circle circleFromSFMLCircle(const sf::CircleShape& c) {
-    return Circle({c.getPosition().x, c.getPosition().y}, c.getRadius());
-}
-
 Collision Ball::getCollisionWithEntity(IEntity* e) {
     Circle c = circleFromSFMLCircle(m_circle);
-    Rectangle r = rectFromEntity(e);
+    Rectangle r = rectFromSFMLBounds(e->getGlobalBounds());
     return getCollisionBetweenCircleAndRect(c, r);
 }
 
@@ -65,21 +56,27 @@ void Ball::handleCollision(const Collision& coll) {
 }
 
 void Ball::collideWithWindowFrame() {
-    sf::Vector2u window_size = Game::window->getSize();
-    sf::FloatRect bounds = getGlobalBounds();
-    sf::FloatRect window_bounds = sf::FloatRect(0, 0, window_size.x,
-            window_size.y);
+    Collision coll = getCollisionOfRectWithinBounds(rectFromSFMLBounds(
+                getGlobalBounds()),
+                rectFromSFMLSize(Game::window->getSize()));
 
-    // Bounce off sides
-    if (!isWithinWidth(bounds, window_bounds))
-        m_velocity.x = - m_velocity.x;
-    if (bounds.top <= 0)
-        m_velocity.y = -m_velocity.y;
-
-    // Adjust position to surely be within window
-    sf::Vector2f pos = m_circle.getPosition();
-    m_circle.setPosition(glm::clamp(pos.x, 0.0f, (float)window_size.x),
-            pos.y < m_circle.getRadius() ? m_circle.getRadius() : pos.y);
+    if (coll.collides) {
+        switch (coll.side) {
+            case EAST:
+            case WEST:
+                m_circle.move(coll.push_back.x, coll.push_back.y);
+                m_velocity.x = -m_velocity.x;
+                break;
+            case NORTH:
+                m_circle.move(coll.push_back.x, coll.push_back.y);
+                m_velocity.y = -m_velocity.y;
+                break;
+            case SOUTH:
+                this->wentOutOfBounds = true;
+                break;
+        }
+    }
+    return;
 }
 
 void Ball::update(float elapsed_time) {

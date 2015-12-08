@@ -15,6 +15,7 @@ public:
     void draw(sf::RenderWindow &window) override;
     void update(float elapsed_time) override;
     sf::FloatRect getGlobalBounds() override;
+    bool wentOutOfBounds = false; // For the game to know when game is over
 
 private:
     sf::CircleShape m_circle;
