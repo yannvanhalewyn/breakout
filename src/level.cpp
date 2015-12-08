@@ -37,6 +37,7 @@ const Level readLevelDataFromDisk(std::string fname) {
         }
     }
 
+    std::cout << "Successfully loaded " << fname << std::endl;
     return lvl;
 }
 

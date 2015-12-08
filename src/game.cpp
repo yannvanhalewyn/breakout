@@ -3,6 +3,8 @@
 #include "level_loader.h"
 #include "ball.h"
 
+#include <iostream>
+
 Game::~Game() {
     delete window;
 }
@@ -14,7 +16,7 @@ void Game::init() {
         window->setFramerateLimit(60);
     }
 
-    loadLevel(1);
+    loadLevel(m_current_level);
     m_entity_manager = EntityManager::getInstance();
 }
 
@@ -32,7 +34,7 @@ void Game::run() {
 
         // Check for game over
         if (static_cast<Ball*>(EntityManager::getBall())->wentOutOfBounds) {
-            loadLevel(2);
+            loadLevel(++m_current_level);
         }
     }
 }
