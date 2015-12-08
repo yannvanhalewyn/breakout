@@ -32,7 +32,7 @@ void Game::run() {
 
         // Check for game over
         if (static_cast<Ball*>(EntityManager::getBall())->wentOutOfBounds) {
-            window->close();
+            loadLevel(2);
         }
     }
 }

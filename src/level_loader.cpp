@@ -13,9 +13,9 @@
 
 bool loadLevel(int n) {
     Level level = getLevel(n);
-    std::cout << level.ballInitialSpeed << std::endl;
 
     EntityManager* entity_manager = EntityManager::getInstance();
+    entity_manager->clearAll();
 
     // Add Ball and paddle
     Ball* ball = new Ball(level.ballInitialSpeed);

@@ -34,6 +34,16 @@ void EntityManager::drawAll(sf::RenderWindow& window) {
     }
 }
 
+void EntityManager::clearAll() {
+    for (IEntity* e : m_entities) {
+        delete e;
+    }
+    m_entities.clear();
+    m_bricks.clear();
+    m_paddle = nullptr;
+    m_ball = nullptr;
+}
+
 EntityManager* EntityManager::instance;
 IEntity* EntityManager::m_paddle;
 IEntity* EntityManager::m_ball;
