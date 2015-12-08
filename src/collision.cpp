@@ -28,3 +28,44 @@ const Collision getCollisionBetweenCircleAndRect(const Circle& c, const Rectangl
     collision.side = getCirclesSideFromRect(c, r);
     return collision;
 }
+
+const Collision getCollisionOfRectWithinBounds(const Rectangle& rect,
+        const Rectangle& frame) {
+    Collision coll;
+
+    // Out of left side
+    if (rect.left < frame.left) {
+        // Will not collide
+        coll.collides = true;
+        coll.depth = frame.left - rect.left;
+        coll.push_back = glm::vec2(coll.depth, 0.0f);
+        return coll;
+    }
+
+    // Out of right side
+    if (rect.left + rect.width > frame.left + frame.width) {
+        coll.collides = true;
+        coll.depth = rect.left + rect.width - (frame.left + frame.width);
+        coll.push_back = glm::vec2(-coll.depth, 0.0f);
+        return coll;
+    }
+
+    // Out of top
+    if (rect.top < frame.top) {
+        coll.collides = true;
+        coll.depth = frame.top - rect.top;
+        coll.push_back = glm::vec2(0.0f, coll.depth);
+        return coll;
+    }
+
+    // Out of bottom
+    if (rect.top + rect.height > frame.top + frame.height) {
+        coll.collides = true;
+        coll.depth = rect.top + rect.height - (frame.top + frame.height);
+        coll.push_back = glm::vec2(0.0f, -coll.depth);
+        return coll;
+    }
+
+    // Default = collision
+    return coll;
+}

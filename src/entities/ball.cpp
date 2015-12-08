@@ -79,7 +79,7 @@ void Ball::collideWithWindowFrame() {
     // Adjust position to surely be within window
     sf::Vector2f pos = m_circle.getPosition();
     m_circle.setPosition(glm::clamp(pos.x, 0.0f, (float)window_size.x),
-            pos.y < 0 ? 0 : pos.y);
+            pos.y < m_circle.getRadius() ? m_circle.getRadius() : pos.y);
 }
 
 void Ball::update(float elapsed_time) {
