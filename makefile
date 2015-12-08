@@ -11,8 +11,14 @@ OBJDIR = obj
 BINDIR = bin
 
 # Executables
-EXEC = breakout
-EXEC := $(addprefix $(BINDIR)/, $(EXEC))
+APP_NAME = breakout
+EXEC := $(addprefix $(BINDIR)/, $(APP_NAME))
+
+# Package
+APP_PKG=$(APP_NAME).app
+CONTENTS_DIR=$(APP_PKG)/Contents
+RSC_DIR=$(CONTENTS_DIR)/resources
+EXEC_DIR=$(CONTENTS_DIR)/MacOS
 
 # Sources
 SOURCES := $(shell find $(SRCDIR) -name '*.cpp')
@@ -29,7 +35,15 @@ $(OBJECTS): $(OBJDIR)/%.o: $(SRCDIR)/%.cpp $(HEADERS)
 
 # Helpers
 clean:
-	rm -f $(EXEC) $(OBJECTS)
+	rm -rf $(APP_PKG) $(BINDIR) $(OBJDIR)
+
+package: $(EXEC)
+	@[[ -d $(APP_PKG) ]] || mkdir $(APP_PKG)
+	@[[ -d $(CONTENTS_DIR) ]] || mkdir $(CONTENTS_DIR)
+	@[[ -d $(RSC_DIR) ]] || mkdir $(RSC_DIR)
+	@[[ -d $(EXEC_DIR) ]] || mkdir $(EXEC_DIR)
+	cp $(EXEC) $(EXEC_DIR)
+	rsync -av ./resources $(CONTENTS_DIR)
 
 print_vars:
 	@echo SOURCES = $(SOURCES)
