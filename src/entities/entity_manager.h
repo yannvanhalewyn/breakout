@@ -12,6 +12,8 @@ public:
     void updateAll();
     void drawAll(sf::RenderWindow& window);
 
+    void clearAll();
+
     static EntityManager* getInstance();
 
     void recordPaddle(IEntity* paddle) { m_paddle = paddle; }

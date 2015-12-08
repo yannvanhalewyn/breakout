@@ -4,7 +4,6 @@
 sf::Texture* TextureManager::get(const std::string& filename) {
     // If texture had already been loaded, return it:
     if (m_texture_cache[filename]) {
-        std::cout << "Returning cached texture" << std::endl;
         return m_texture_cache[filename];
 
 
